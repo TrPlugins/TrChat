@@ -60,6 +60,8 @@ Custom:
   # 示例 —— 网站分享
   shareUrl:
     pattern: '(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[0-9]+)?)(\/[^?#]*)?(\?[^#]*)?(#.*)?'
+    #whitelist:
+    #  - '这里是白名单 不会被替换'
     display:
       text: '&8[&f&l网站&8]'
       hover:

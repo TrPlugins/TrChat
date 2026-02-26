@@ -22,6 +22,7 @@ class CustomFunction(
     val priority: Int,
     val regex: Regex,
     val filterTextRegex: Regex?,
+    val whitelist: List<String>? = null,
     val cooldownMillis: Long?,
     val cooldownMessage: String?,
     val displayJson: JsonComponent,
@@ -29,7 +30,13 @@ class CustomFunction(
 ) : Function(id) {
 
     override fun createVariable(sender: Player, message: String): String {
-        return message.replaceRegex(regex, filterTextRegex) { "{{$id:${push(it)}}}" }
+        return message.replaceRegex(regex, filterTextRegex) { matched ->
+            if (whitelist != null && whitelist.any { it.equals(matched, ignoreCase = true) }) {
+                matched
+            } else {
+                "{{$id:${push(matched)}}}"
+            }
+        }
     }
 
     override fun parseVariable(sender: Player, arg: String): ComponentText {

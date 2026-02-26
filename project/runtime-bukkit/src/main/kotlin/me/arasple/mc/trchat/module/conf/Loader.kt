@@ -199,6 +199,7 @@ object Loader {
             val priority = map.getInt("priority", 100)
             val regex = map.getString("pattern")!!.toRegex()
             val filterTextRegex = map.getString("text-filter")?.toRegex()
+            val whitelist = map.getStringList("whitelist").takeIf { it.isNotEmpty() }
             val cooldown = kotlin.runCatching { map.getString("cooldown")?.parseMillis() }
                 .onFailure { console().sendLang("Mute-Wrong-Format", map.getString("cooldown")!!) }
                 .getOrNull()
@@ -206,7 +207,7 @@ object Loader {
             val displayJson = parseJSON(map.getConfigurationSection("display")!!.toMap(), isMsg = false)
             val reaction = map["action"]?.let { Reaction(it.asList()) }
 
-            CustomFunction(id, condition, priority, regex, filterTextRegex, cooldown, cooldownMessage, displayJson, reaction)
+            CustomFunction(id, condition, priority, regex, filterTextRegex, whitelist, cooldown, cooldownMessage, displayJson, reaction)
         }.sortedBy { it.priority }
 
         Function.reload(functions)
