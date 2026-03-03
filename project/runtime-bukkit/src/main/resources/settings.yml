@@ -38,7 +38,8 @@ Chat:
   Anti-Repeat: 0.85
   Cooldown: '2.0s'
   Length-Limit: 100
-  Sign-Edit-Permission-Check: false
+  Sign-Edit-Permission-Check: false   #禁言/无发言权限 无法编辑告示牌  false 关闭 true 开启
+  Book-Edit-Permission-Check: false   #禁言/无发言权限 无法编辑书本  false 关闭 true 开启
 
 Color:
   Chat: true

@@ -234,6 +234,13 @@ Sign-Edit-No-Permission:
     sound: 'ENTITY_ITEM_BREAK'
     volume: 1
     pitch: 0
+Book-Edit-No-Permission:
+  - type: actionbar
+    text: '&c你没有权限编辑书与笔'
+  - type: sound
+    sound: 'ENTITY_ITEM_BREAK'
+    volume: 1
+    pitch: 0
 
 Mute-Muted-Player: '&8[&3Tr&bChat&8] &7你已禁言 {0} {1}.原因: {2}'
 Mute-Cancel-Muted-Player: '&8[&3Tr&bChat&8] &7你已取消禁言 {0}.'

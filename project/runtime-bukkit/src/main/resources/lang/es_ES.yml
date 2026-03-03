@@ -224,6 +224,13 @@ Sign-Edit-No-Permission:
     sound: 'ENTITY_ITEM_BREAK'
     volume: 1
     pitch: 0
+Book-Edit-No-Permission:
+  - type: actionbar
+    text: '&cYou do not have permission to edit books and pens.'
+  - type: sound
+    sound: 'ENTITY_ITEM_BREAK'
+    volume: 1
+    pitch: 0
 
 Mute-Muted-Player: '&8[&3Tr&bChat&8] &7Fuiste silenciado por {0}, el tiempo de {1}.Razón: {2}'
 Mute-Cancel-Muted-Player: '&8[&3Tr&bChat&8] &7El silencio fue cancelado {0}.'
