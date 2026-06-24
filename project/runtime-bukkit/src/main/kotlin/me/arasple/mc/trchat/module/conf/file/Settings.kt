@@ -51,6 +51,10 @@ object Settings {
     var simpleHover = false
         private set
 
+    @ConfigNode("Options.Disable-Reply", "settings.yml")
+    var disableReply = false
+        private set
+
     @Awake(LifeCycle.ENABLE)
     fun init() {
         conf.onReload {
