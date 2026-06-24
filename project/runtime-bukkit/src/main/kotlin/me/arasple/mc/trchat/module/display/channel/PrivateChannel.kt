@@ -9,6 +9,7 @@ import me.arasple.mc.trchat.module.display.channel.obj.ChannelExecuteResult
 import me.arasple.mc.trchat.module.display.channel.obj.ChannelSettings
 import me.arasple.mc.trchat.module.display.format.Format
 import me.arasple.mc.trchat.module.display.format.MsgComponent
+import me.arasple.mc.trchat.module.conf.file.Settings
 import me.arasple.mc.trchat.module.internal.TrChatBukkit
 import me.arasple.mc.trchat.module.internal.command.main.CommandReply
 import me.arasple.mc.trchat.module.internal.data.ChatLogs
@@ -54,7 +55,7 @@ class PrivateChannel(
     }
 
     override fun registerCommand() {
-        if (bindings.command.isNullOrEmpty() || TrChatBukkit.isActivated) return
+        if (Settings.disablePrivate || bindings.command.isNullOrEmpty() || TrChatBukkit.isActivated) return
         command(
             name = bindings.command[0],
             aliases = subList(bindings.command, 1),

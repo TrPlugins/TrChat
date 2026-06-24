@@ -11,7 +11,7 @@ Options:
   Cheat-Client-Secure-Chat: false
   Use-Packets: true
   Disabled-Commands: []
-  Disable-Reply: false
+  Disable-Private: false
 
 Channel:
   Default: 'Normal'

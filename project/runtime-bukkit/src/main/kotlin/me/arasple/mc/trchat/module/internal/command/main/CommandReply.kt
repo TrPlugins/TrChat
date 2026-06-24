@@ -29,7 +29,7 @@ object CommandReply {
 
     @Awake(LifeCycle.ENABLE)
     fun register() {
-        if (Settings.disableReply || Settings.conf.getStringList("Options.Disabled-Commands").contains("reply")) return
+        if (Settings.disablePrivate || Settings.conf.getStringList("Options.Disabled-Commands").contains("reply")) return
         command("reply", listOf("trreply", "r"), "Reply", permission = "trchat.private") {
             dynamic("message") {
                 execute<Player> { sender, _, argument ->

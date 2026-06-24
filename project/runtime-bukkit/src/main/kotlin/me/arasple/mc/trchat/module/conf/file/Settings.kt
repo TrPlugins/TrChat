@@ -51,8 +51,8 @@ object Settings {
     var simpleHover = false
         private set
 
-    @ConfigNode("Options.Disable-Reply", "settings.yml")
-    var disableReply = false
+    @ConfigNode("Options.Disable-Private", "settings.yml")
+    var disablePrivate = false
         private set
 
     @Awake(LifeCycle.ENABLE)
