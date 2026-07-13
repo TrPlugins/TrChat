@@ -15,6 +15,7 @@ import taboolib.common.platform.event.EventPriority
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.module.configuration.ConfigNode
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * @author ItsFlicker
@@ -27,12 +28,15 @@ object ListenerChat {
     var cancelEvent = false
         private set
 
-    private val cachePrefix = mutableMapOf<UUID, String>()
+    private val cachePrefix = ConcurrentHashMap<UUID, String>()
+    private val claimedPaperChats = ConcurrentHashMap.newKeySet<UUID>()
 
     @Ghost
-    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     fun onPaperChat(e: AsyncChatEvent) {
         if (!TrChatBukkit.isPaperEnv) return
+        val claimed = claimedPaperChats.remove(e.player.uniqueId)
+        if (e.isCancelled && !claimed) return
         if (cancelEvent) {
             e.isCancelled = true
         } else {
@@ -55,21 +59,30 @@ object ListenerChat {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    fun onBukkitChat(e: AsyncPlayerChatEvent) {
-        // 提前判定前缀
-        if (TrChatBukkit.isPaperEnv) {
-            Channel.channels.values.forEach { channel ->
-                channel.bindings.prefix?.forEach {
-                    if (e.message.startsWith(it, ignoreCase = true)) {
-                        cachePrefix[e.player.uniqueId] = channel.id
-                        e.message = e.message.substring(it.length)
-                        return
-                    }
+    @SubscribeEvent(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    fun onPaperLegacyChat(e: AsyncPlayerChatEvent) {
+        if (!TrChatBukkit.isPaperEnv) return
+
+        if (cancelEvent) {
+            claimedPaperChats += e.player.uniqueId
+            e.isCancelled = true
+        } else {
+            e.recipients.clear()
+        }
+        Channel.channels.values.forEach { channel ->
+            channel.bindings.prefix?.forEach {
+                if (e.message.startsWith(it, ignoreCase = true)) {
+                    cachePrefix[e.player.uniqueId] = channel.id
+                    e.message = e.message.substring(it.length)
+                    return
                 }
             }
-            return
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun onBukkitChat(e: AsyncPlayerChatEvent) {
+        if (TrChatBukkit.isPaperEnv) return
         if (e.isCancelled) return
         if (cancelEvent) {
             e.isCancelled = true

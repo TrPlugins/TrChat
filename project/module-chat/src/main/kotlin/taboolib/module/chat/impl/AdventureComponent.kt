@@ -166,12 +166,12 @@ class AdventureComponent() : ComponentText {
 
     override fun click(action: ClickAction, value: String): ComponentText {
         when (action) {
-            ClickAction.OPEN_URL,
-            ClickAction.OPEN_FILE,
-            ClickAction.RUN_COMMAND,
-            ClickAction.SUGGEST_COMMAND,
-            ClickAction.CHANGE_PAGE,
-            ClickAction.COPY_TO_CLIPBOARD -> latest.clickEvent(ClickEvent.clickEvent(ClickEvent.Action.valueOf(action.name), value))
+            ClickAction.OPEN_URL -> latest.clickEvent(ClickEvent.openUrl(value))
+            ClickAction.OPEN_FILE -> latest.clickEvent(ClickEvent.openFile(value))
+            ClickAction.RUN_COMMAND -> latest.clickEvent(ClickEvent.runCommand(value))
+            ClickAction.SUGGEST_COMMAND -> latest.clickEvent(ClickEvent.suggestCommand(value))
+            ClickAction.CHANGE_PAGE -> latest.clickEvent(ClickEvent.changePage(value.toInt()))
+            ClickAction.COPY_TO_CLIPBOARD -> latest.clickEvent(ClickEvent.copyToClipboard(value))
             // 插入文本
             ClickAction.INSERTION -> clickInsertText(value)
         }
