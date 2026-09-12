@@ -27,7 +27,7 @@ subprojects {
                 "database",
                 "database-alkaid-redis",
                 "database-player",
-                "database-postgresql"
+//                "database-postgresql"
             )
             install(
                 "minecraft-chat",
